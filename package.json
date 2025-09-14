@@ -1,0 +1,25 @@
+{
+  "name": "viashort",
+  "version": "1.0.0",
+  "description": "ViaShort is a modern and efficient URL shortening service built with Node.js & Express.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ViaShort"
+  },
+  "keywords": [
+    "URL",
+    "Shortner"
+  ],
+  "author": "Saksham Singh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.18.1",
+    "nodemon": "^3.1.10"
+  }
+}

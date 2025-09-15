@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ViaShort - The URL Shortener</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col items-center justify-start p-6">
+
+
+  <header class="w-full max-w-3xl text-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-800">ViaShort</h1>
+    <p class="text-gray-500 mt-1 text-lg">The URL Shortener</p>
+    <p class="text-gray-500 mt-2 text-sm">Create, share & track your shortened links easily</p>
+  </header>
+
+  <!-- Show Generated URL -->
+  <% if (locals.id) { %>
+    <div class="bg-gray-200 border border-gray-300 text-gray-800 px-4 py-3 rounded-lg w-full max-w-2xl mb-6 text-center shadow-sm">
+      <p>
+        ✅ URL Generated:
+        <a href="http://localhost:8080/url/<%= locals.id %>" target="_blank"
+          class="text-gray-900 font-semibold hover:underline">
+          http://localhost:8080/url/<%= locals.id %>
+        </a>
+      </p>
+      <!--  Home Button -->
+      <div class="mt-4">
+        <a href="/"
+          class="inline-block bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg transition">
+          ⬅ Back to Home
+        </a>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- Form to enter URL -->
+  <div class="w-full max-w-2xl bg-white shadow-md rounded-2xl p-6 mb-10">
+    <form method="POST" action="/url" class="flex flex-col gap-4">
+      <label class="text-gray-700 font-medium">Enter Your Original URL</label>
+      <input
+        type="text"
+        name="url"
+        placeholder="https://example.com"
+        class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        required
+      />
+      <button
+        type="submit"
+        class="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg transition">
+        Generate
+      </button>
+    </form>
+  </div>
+
+  <!-- Table -->
+  <div class="w-full max-w-4xl">
+    <% if (locals.urls) { %>
+      <h2 class="text-xl font-semibold mb-3 text-gray-700">📊 Your Shortened Links</h2>
+      <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-gray-700 text-white">
+            <tr>
+              <th class="px-4 py-2">S. No</th>
+              <th class="px-4 py-2">ShortID</th>
+              <th class="px-4 py-2">Redirect</th>
+              <th class="px-4 py-2">Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% urls.forEach((url, index) => { %>
+              <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-200 transition">
+                <td class="px-4 py-2 font-medium text-gray-600"><%= index + 1 %></td>
+                <td class="px-4 py-2 text-gray-900 font-semibold"><%= url.shortId %></td>
+                <td class="px-4 py-2 text-gray-700 underline">
+                  <a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a>
+                </td>
+                <td class="px-4 py-2 text-gray-700"><%= url.visitHistory.length %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+
+</body>
+</html>
